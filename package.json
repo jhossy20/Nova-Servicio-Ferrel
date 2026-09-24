@@ -1,0 +1,21 @@
+{
+  "name": "portal-soporte-ti-semana2",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Laboratorio de las sesiones 3 y 4: HTML, CSS responsive y flujo Git.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs",
+    "format": "prettier --write .",
+    "check": "prettier --check .",
+    "check:syntax": "node --check public/assets/js/ui.js && node --check scripts/server.mjs && node --check scripts/serve.mjs",
+    "test": "node --test tests/server.test.mjs"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
+  }
+}
