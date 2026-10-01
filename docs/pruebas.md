@@ -30,3 +30,24 @@ Datos de prueba: Ana Prueba, ana@example.test, Red, Media y "No funciona la cone
 ## Correcciones
 
 Registra problema, causa, cambio, commit y resultado de la nueva prueba.
+
+## Evidencias del examen parcial
+
+### Pruebas responsive
+
+- 320 px: verificado, sin desplazamiento horizontal.
+- 768 px: verificado.
+- 1440 px: verificado.
+- Zoom 200 %: verificado, contenido utilizable.
+
+### Accesibilidad
+
+- Foco de teclado: verificado.
+- Los controles interactivos presentan estado de foco visible.
+
+### Formulario
+
+- Formulario inválido: verificado mediante validación nativa.
+- Formulario válido: verificado.
+- Se muestra una confirmación simulada.
+- No se envían ni almacenan tickets.
