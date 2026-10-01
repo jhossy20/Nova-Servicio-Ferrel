@@ -67,3 +67,89 @@ No requiere React, Vite, Supabase ni base de datos en esta semana.
 - [Prettier: instalación reproducible](https://prettier.io/docs/install)
 - [Vercel: configuración](https://vercel.com/docs/project-configuration/vercel-json)
 - [Vercel: ambientes](https://vercel.com/docs/deployments/environments)
+
+## Examen Parcial
+
+### 12. Planificación y modelo conceptual
+
+#### Brief de 5 dimensiones
+
+- **Usuario:** Personas que utilizan Nova Servicios para solicitar soporte.
+- **Necesidad:** Consultar servicios y registrar una solicitud de soporte simulada.
+- **Problema:** Se necesita una forma clara y rápida de solicitar ayuda.
+- **Solución:** Portal responsive con servicios, formulario, estados, preguntas frecuentes y contacto.
+- **Valor:** Facilita el acceso al soporte y organiza la información de manera clara.
+
+#### Historias de usuario
+
+1. **Consultar servicios:** el portal muestra 4 tarjetas de servicio y permite acceder al formulario.
+2. **Registrar solicitud:** el formulario solicita nombre, correo, tipo, prioridad y descripción.
+3. **Seleccionar prioridad:** la prioridad se selecciona mediante una opción única y obligatoria.
+4. **Consultar estados:** se muestran los estados Pendiente, En proceso, Resuelto y Cerrado/Cancelado.
+5. **Usar diferentes dispositivos:** el portal fue comprobado a 320, 768 y 1440 px y a 200 % de zoom.
+
+#### Prioridades MoSCoW
+
+- **Must:** navegación, 4 servicios, formulario validado, prioridades, estados, FAQ y contacto.
+- **Should:** foco visible, zoom 200 % y comprobaciones responsive.
+- **Could:** mejoras visuales y contenido complementario.
+- **Won't:** backend, base de datos real, almacenamiento o envío real de tickets.
+
+#### Wireframe
+
+El wireframe contiene seis zonas:
+
+1. Encabezado y navegación.
+2. Presentación principal.
+3. Catálogo de servicios.
+4. Formulario.
+5. Estados de ejemplo.
+6. Pie de página.
+
+#### Modelo conceptual
+
+El modelo se encuentra en `docs/modelo-datos.pdf`.
+
+Entidades:
+
+- **Usuario:** PK `id_usuario`.
+- **Servicio:** PK `id_servicio`.
+- **Solicitud:** PK `id_solicitud`, FK `id_usuario`, FK `id_servicio`.
+- **Actualización:** PK `id_actualizacion`, FK `id_solicitud`.
+- **Auditoría:** PK `id_auditoria`, FK `id_usuario`.
+
+Relaciones:
+
+- Usuario 1:N Solicitud.
+- Servicio 1:N Solicitud.
+- Solicitud 1:N Actualización.
+- Usuario 1:N Auditoría.
+
+Los estados de una solicitud son Pendiente, En proceso, Resuelto y Cerrado/Cancelado. Solo el rol técnico puede cambiar el estado. Cada cambio de estado genera una Actualización y un registro de Auditoría con actor, acción, fecha y entidad afectada.
+
+### 13. Análisis de casos
+
+#### Solicitudes 1001 y 1005
+
+Para determinar si pueden ser duplicadas se compararían:
+
+- Usuario y correo.
+- Servicio y tipo de solicitud.
+- Descripción del problema.
+- Fecha y hora.
+- Prioridad y estado.
+
+Se conservaría la información más completa y se mantendría el registro relacionado para conservar el historial.
+
+#### Cambio de prioridad de la solicitud 1002
+
+El registro de auditoría `5004` indica:
+
+- `user_id = 9`
+- Acción: `CAMBIO_PRIORIDAD`
+- Fecha: `2026-09-30 14:32`
+- Cambio: Media → Alta.
+
+El evento se relacionaría con la solicitud mediante la entidad afectada y el identificador del registro. Para investigar la autorización se verificaría quién es el usuario 9, su rol, sus permisos y si existe una autorización o motivo registrado para realizar el cambio.
+
+No se implementa una base de datos real.
